@@ -1,6 +1,9 @@
 # Node Amandil - Cek Lease Time DHCP
-# Lepas lease lama, lalu minta lease baru
+
+
+# Lepas lease lama 
 dhclient -r eth0
+# minta lease baru
 dhclient -v eth0
 
 # Tampilkan informasi lease yang diterima
@@ -15,10 +18,12 @@ cat /var/lib/dhcp/dhclient.leases | grep "renew\|rebind\|expire"
 # expire: 3600 detik → 1 jam
 
 # Node Gilgalad  – Cek Lease Time DHCP
-# Hapus lease lama dan dapatkan lease baru
+# Lepas lease lama 
 dhclient -r eth0
+# minta lease baru
 dhclient -v eth0
 
+# Tampilkan informasi lease yang diterima
 cat /var/lib/dhcp/dhclient.leases | grep lease-time
 cat /var/lib/dhcp/dhclient.leases | grep "renew\|rebind\|expire"
 
@@ -28,3 +33,4 @@ cat /var/lib/dhcp/dhclient.leases | grep "renew\|rebind\|expire"
 # renew: 300 detik (½ dari 600 → 5 menit)
 # rebind: 525 detik (7/8 dari 600 → ±8,75 menit)
 # expire: 3600 detik → 1 jam
+
