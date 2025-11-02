@@ -1,5 +1,13 @@
 # Node Elendil, Isildur, Anarion
 # masing masing Laravel Workers
+git config --global --add safe.directory /var/www/laravel-simple-rest-api
+apt update && apt install -y php8.2 php8.2-cli php8.2-xml php8.2-mbstring php8.2-curl php8.2-zip php8.2-mysql
+update-alternatives --set php /usr/bin/php8.2
+cd /var/www/laravel-simple-rest-api
+composer install
+cp .env.example .env  # jika perlu
+php artisan key:generate
+php artisan --version
 
 #Jalankan ini untuk donwload kebutuhan ketiga node tersebut
 apt-get update && apt-get install -y lsb-release ca-certificates apt-transport-https software-properties-common gnupg2
@@ -33,7 +41,7 @@ cd /var/www/laravel-simple-rest-api
 php artisan --version
 
 
-# jika bermasalah jalankan script ini lalu ulang ke bagian test
+
 git config --global --add safe.directory /var/www/laravel-simple-rest-api
 apt update && apt install -y php8.2 php8.2-cli php8.2-xml php8.2-mbstring php8.2-curl php8.2-zip php8.2-mysql
 update-alternatives --set php /usr/bin/php8.2
@@ -42,6 +50,7 @@ composer install
 cp .env.example .env  # jika perlu
 php artisan key:generate
 php artisan --version
+
 
 
 
