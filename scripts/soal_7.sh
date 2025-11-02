@@ -4,10 +4,12 @@
 #Jalankan ini untuk donwload kebutuhan ketiga node tersebut
 apt-get update && apt-get install -y lsb-release ca-certificates apt-transport-https software-properties-common gnupg2
 curl -sSL https://packages.sury.org/php/README.txt | bash -x
-apt-get install -y php8.4 php8.4-fpm php8.4-mysql php8.4-mbstring php8.4-xml php8.4-curl php8.4-zip unzip nginx git
 
+#dan download melalui script ini 
+apt-get install -y php8.4 php8.4-fpm php8.4-mysql php8.4-mbstring php8.4-xml php8.4-curl php8.4-zip unzip nginx git
 curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+#jalankan script ini dimana kita nge clone github laravelnya
 cd /var/www
 git clone https://github.com/elshiraphine/laravel-simple-rest-api.git
 cd laravel-simple-rest-api
@@ -18,7 +20,6 @@ composer update
 cp .env.example .env
 
 php artisan key:generate
-
 
 
 # validasi di ketiga node tersebut
@@ -41,6 +42,7 @@ composer install
 cp .env.example .env  # jika perlu
 php artisan key:generate
 php artisan --version
+
 
 
 
