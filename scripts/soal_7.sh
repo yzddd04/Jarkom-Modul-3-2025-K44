@@ -42,14 +42,7 @@ php artisan --version
 
 
 
-git config --global --add safe.directory /var/www/laravel-simple-rest-api
-apt update && apt install -y php8.2 php8.2-cli php8.2-xml php8.2-mbstring php8.2-curl php8.2-zip php8.2-mysql
-update-alternatives --set php /usr/bin/php8.2
-cd /var/www/laravel-simple-rest-api
-composer install
-cp .env.example .env  # jika perlu
-php artisan key:generate
-php artisan --version
+
 
 
 
