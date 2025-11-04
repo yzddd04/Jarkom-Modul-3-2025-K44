@@ -5,9 +5,8 @@ No  | Nama                  | NRP
 2   | Tiara Fatimah Azzahra | 5027241090
 
 ## Soal 1
-# SETUP KONFIGURASI SELURUH NODE YANG ADA
 
-# NODE DURIN
+# Node DURIN
 ```
 auto lo
 iface lo inet loopback
@@ -44,7 +43,7 @@ iface eth5 inet static
 
 ```
 
-# NODE ELENDIL 
+# Node ELENDIL 
 ```
 auto eth0
 iface eth0 inet static
@@ -54,7 +53,7 @@ iface eth0 inet static
     up echo nameserver 192.168.122.1 > /etc/resolv.conf
 ```
 
-# NODE ISILDUR 
+# Node ISILDUR 
 ```
 auto eth0
 iface eth0 inet static
@@ -65,7 +64,7 @@ iface eth0 inet static
 ```
 
 
-# NODE ANARION
+# Node ANARION
 ```
 auto eth0
 iface eth0 inet static
@@ -76,7 +75,7 @@ iface eth0 inet static
 
 ```
 
-# NODE MIRIEL 
+# Node MIRIEL 
 ```
 auto eth0
 iface eth0 inet static
@@ -87,7 +86,7 @@ iface eth0 inet static
 
 ```
 
-# NODE AMANDIL 
+# Node AMANDIL 
 ```
 auto eth0
 iface eth0 inet dhcp
@@ -95,7 +94,7 @@ iface eth0 inet dhcp
 
 ```
 
-# NODE ELROS 
+# Node ELROS 
 ```
 auto eth0
 iface eth0 inet static
@@ -107,7 +106,7 @@ iface eth0 inet static
 
 ```
 
-# NODE GILGALAD 
+# Node GILGALAD 
 ```
 auto eth0
 iface eth0 inet dhcp
@@ -115,7 +114,7 @@ iface eth0 inet dhcp
 
 ```
 
-# NODE CELEBRIMBOR 
+# Node CELEBRIMBOR 
 ``` 
 auto eth0
 iface eth0 inet static
@@ -126,7 +125,7 @@ iface eth0 inet static
 
 ``` 
 
-# NODE PHARAZON 
+# Node PHARAZON 
 ```
 auto eth0
 iface eth0 inet static
@@ -138,7 +137,7 @@ iface eth0 inet static
 
 ```
 
-# NODE GALADRIEL 
+# Node GALADRIEL 
 
 ```
 auto eth0
@@ -150,7 +149,7 @@ iface eth0 inet static
 
 ```
 
-# NODE CELEBORN 
+# Node CELEBORN 
 ```
 auto eth0
 iface eth0 inet static
@@ -161,7 +160,7 @@ iface eth0 inet static
 
 ```
 
-# NODE OROPHER
+# Node OROPHER
 ```
 auto eth0
 iface eth0 inet static
@@ -172,7 +171,7 @@ iface eth0 inet static
 
 ``` 
 
-# NODE KHAMUL (CLIENT-ADDRES-FIXED)
+# Node KHAMUL (Client-Addres-Fixed)
 ```
 auto eth0
 iface eth0 inet dhcp
@@ -181,7 +180,7 @@ iface eth0 inet dhcp
 
 ```
 
-# NODE ERENDIS
+# Node ERENDIS
 ```
 auto eth0
 iface eth0 inet static
@@ -192,7 +191,7 @@ iface eth0 inet static
 
 ```
 
-# NODE AMDIR 
+# Node AMDIR 
 ``` 
 auto eth0
 iface eth0 inet static
@@ -204,7 +203,7 @@ iface eth0 inet static
 
 ```
 
-# NODE ALDARION 
+# Node ALDARION 
 ```
 auto eth0
 iface eth0 inet static
@@ -215,7 +214,7 @@ iface eth0 inet static
 
 ```
 
-# NODE PALANTIR 
+# Node PALANTIR 
 ```
 auto eth0
 iface eth0 inet static
@@ -226,7 +225,7 @@ iface eth0 inet static
 
 ``` 
 
-# NODE NARVI 
+# Node NARVI 
 ```
 auto eth0
 iface eth0 inet static
@@ -237,7 +236,7 @@ iface eth0 inet static
 
 ``` 
 
-# NODE MINASTIR 
+# Node MINASTIR 
 
 ``` 
 auto eth0
@@ -249,19 +248,25 @@ iface eth0 inet static
 
 ``` 
 
-# TEST SELURUH NODE 
+# Setup `nameserver` di seluruh node
+```
+echo "nameserver 192.168.122.1" > /etc/resolv.conf
+```
+
+# Test Seluruh Node
 ``` 
 apt-get update
 apt-get install -y nano dnsutils lynx htop curl apache2-utils
 ```
 
-# TES KONEKTIVITAS SELURUH NODE 
+# Validasi
 ``` 
 ping -c 3 8.8.8.8
 ping -c 3 google.com
 
 ``` 
 
+![alt image](assets/soal1/image.png)
 
 
 
