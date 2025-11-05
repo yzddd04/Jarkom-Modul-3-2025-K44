@@ -1,36 +1,48 @@
-# Node Amandil - Cek Lease Time DHCP
+# ==== ALDARION: Pengaturan durasi sewa DHCP (lease time) ====
 
+cat <<EOF > /etc/dhcp/dhcpd.conf
+# Jadikan server ini authoritative DHCP
+authoritative;
 
-# Lepas lease lama 
-dhclient -r eth0
-# minta lease baru
-dhclient -v eth0
+# Opsi global: DNS klien diarahkan ke Erendis dan Amdir
+option domain-name-servers 192.233.3.2, 192.233.3.3;
 
-# Tampilkan informasi lease yang diterima
-cat /var/lib/dhcp/dhclient.leases | grep lease-time
-cat /var/lib/dhcp/dhclient.leases | grep "renew\|rebind\|expire"
+# Subnet untuk segmen Manusia
+subnet 192.233.1.0 netmask 255.255.255.0 {
+  range 192.233.1.6 192.233.1.34;
+  range 192.233.1.68 192.233.1.94;
+  option routers 192.233.1.1;
+  option broadcast-address 192.233.1.255;
+  default-lease-time 1800; # <-- 30 menit
+  max-lease-time 3600;     # <-- 60 menit
+}
 
-# Konfigurasi server (manusia)
-# default-lease-time: 1800 detik → 30 menit
-# max-lease-time: 3600 detik → 1 jam
-# renew: 900 detik (½ dari 1800 → 15 menit)
-# rebind: 1575 detik (7/8 dari 1800 → ±26 menit)
-# expire: 3600 detik → 1 jam
+# Subnet untuk segmen Peri
+subnet 192.233.2.0 netmask 255.255.255.0 {
+  range 192.233.2.35 192.233.2.67;
+  range 192.233.2.96 192.233.2.121;
+  option routers 192.233.2.1;
+  option broadcast-address 192.233.2.255;
+  default-lease-time 600;  # <-- 10 menit
+  max-lease-time 3600;     # <-- 60 menit
+}
 
-# Node Gilgalad  – Cek Lease Time DHCP
-# Lepas lease lama 
-dhclient -r eth0
-# minta lease baru
-dhclient -v eth0
+# Subnet untuk Khamul
+subnet 192.233.3.0 netmask 255.255.255.0 {
+  option routers 192.233.3.1;
+  option broadcast-address 192.233.3.255;
+}
 
-# Tampilkan informasi lease yang diterima
-cat /var/lib/dhcp/dhclient.leases | grep lease-time
-cat /var/lib/dhcp/dhclient.leases | grep "renew\|rebind\|expire"
+# Subnet lokal Aldarion
+subnet 192.233.4.0 netmask 255.255.255.0 {
+}
 
-# Konfigurasi server (peri)
-# default-lease-time: 600 detik → 10 menit
-# max-lease-time: 3600 detik → 1 jam
-# renew: 300 detik (½ dari 600 → 5 menit)
-# rebind: 525 detik (7/8 dari 600 → ±8,75 menit)
-# expire: 3600 detik → 1 jam
+# Alamat tetap (fixed) untuk Khamul
+host Khamul {
+  hardware ethernet 02:42:e8:63:34:00;
+  fixed-address 192.233.3.95;
+}
+EOF
 
+# Muat ulang layanan DHCP untuk menerapkan perubahan
+service isc-dhcp-server restart
