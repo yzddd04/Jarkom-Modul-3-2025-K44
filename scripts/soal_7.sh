@@ -77,7 +77,7 @@ chown -R www-data:www-data /var/www/laravel-simple-rest-api/storage
 service php8.4-fpm start
 service nginx restart
 
-# ==== PERBAIKAN: Worker Laravel (Elendil, Isildur, Anarion) ====
+# ====  Worker Laravel (Elendil, Isildur, Anarion) ====
 
 # 1. Masuk ke direktori aplikasi
 cd /var/www/laravel-simple-rest-api

@@ -10,10 +10,7 @@ No  | Nama                  | NRP
 - Set IP statis node: Elendil, Isildur, Anarion, Miriel, elros (Numenor); Galadriel, Celeborn, Oropher, Celebrimbor, Pharazon (Peri); Erendis, Amdir (DNS); Aldarion, Palantir, Narvi (Server); Minastir.
 
 ### Validasi
-- Cek IP dan gateway tiap node: `ip a`, `ip r`.
-- Uji internet dari klien: `ping -c 3 8.8.8.8`, `ping -c 3 google.com`.
-- Dari Durin: `iptables -t nat -S` memastikan aturan MASQUERADE aktif.
-- Dokumentasi: lihat `assets/soal1/image.png`.
+![](assets/soal1/image.png)
 
 ## Soal 2 — DHCP Server & Relay (Aldarion, Durin)
 - Aldarion: install `isc-dhcp-server`, set subnet 192.233.1.0/24, 2.0/24 (range), 3.0/24 (router+broadcast), deklarasi 4.0/24 (kosong), fixed-address Khamul by MAC.
@@ -23,7 +20,13 @@ No  | Nama                  | NRP
 ### Validasi
 - Di klien DHCP: `dhclient -r eth0 && dhclient eth0`, lalu `ip a` untuk memastikan dapat IP sesuai range.
 - Ping gateway dan internet: `ping -c 3 192.233.x.1`, `ping -c 3 google.com`.
-- Di Aldarion: `journalctl -u isc-dhcp-server | tail` untuk melihat offer/ack.
+
+![](assets/soal2/amandil.png)
+
+![](assets/soal2/gilgalad.png)
+
+![](assets/soal2/khamul.png)]
+
 
 ## Soal 3 — DNS Resolver (Minastir) & Distribusi DNS via DHCP
 - Aldarion: `option domain-name-servers 192.233.5.2` untuk klien dinamis.
@@ -34,15 +37,25 @@ No  | Nama                  | NRP
 - Dari klien: `dig @192.233.5.2 google.com +short` dan `ping -c 3 google.com`.
 - Pastikan `/etc/resolv.conf` menunjuk `192.233.5.2`.
 
+![](assets/soal3/amandil.png)
+
+![](assets/soal3/gilgalad.png)
+
+![](assets/soal3/khamul.png)]
+
+
 ## Soal 4 — DNS Authoritative Master/Slave (Erendis/Amdir) + Zona k44.com
 - Erendis (Master): konfigurasi zona `k44.com`, allow-transfer ke Amdir; isi NS dan A records untuk host-2.
 - Amdir (Slave): zona `k44.com` sebagai slave dari Erendis.
 - Aldarion: DHCP untuk klien dinamis gunakan DNS Erendis & Amdir.
 
 ### Validasi
-- `dig @192.233.3.2 elendil.k44.com A +short` dan periksa hasil IP.
-- `dig @192.233.3.3 elendil.k44.com A +short` memastikan slave melayani.
-- Coba `host elendil.k44.com 192.233.3.2` dan `... 192.233.3.3`.
+
+![](assets/soal4/amandil.png)
+
+![](assets/soal4/gilgalad.png)
+
+![](assets/soal4/khamul.png)
 
 ## Soal 5 — Reverse DNS, CNAME, dan TXT
 - Tambah reverse zone `3.91.10.in-addr.arpa` (untuk 192.233.3.0/24) pada Master dan Slave.
@@ -51,9 +64,7 @@ No  | Nama                  | NRP
   - "Aliansi Terakhir=pharazon.k44.com"
 
 ### Validasi
-- `dig @192.233.3.2 -x 192.233.3.2 +short` → `ns1.k44.com.`; `... -x 192.233.3.3` → `ns2.k44.com.`
-- `dig @192.233.3.2 www.k44.com CNAME +short` → `k44.com.`
-- `dig @192.233.3.2 k44.com TXT +short` → dua nilai TXT.
+![](assets/soal5/5.png)
 
 ## Soal 6 — DHCP Lease Time Berbeda per Subnet
 - Subnet 192.233.1.0/24: default 1800s, max 3600s.
@@ -61,17 +72,18 @@ No  | Nama                  | NRP
 - Subnet lain sesuai sebelumnya; Khamul tetap fixed.
 
 ### Validasi
-- Di klien 192.233.1.0/24 dan 192.233.2.0/24: periksa `/var/lib/dhcp/dhclient.leases` (renewal time).
-- `dhclient -v` untuk melihat waktu sewa (lease) saat akuisisi.
 
+![](assets/soal6/6.png)
 ## Soal 7 — Worker Laravel (Elendil, Isildur, Anarion)
 - Install PHP 8.4 + extensions, Nginx, Git, Composer.
 - Clone `laravel-simple-rest-api`, `composer install`, `cp .env.example .env`, `php artisan key:generate`.
 - Nginx per node: listen 8001/8002/8003, fastcgi ke php8.4-fpm; enable site; restart.
 
 ### Validasi
-- `curl http://<host>:8001` (Elendil), `:8002` (Isildur), `:8003` (Anarion) harus menampilkan halaman Laravel.
-- `systemctl status php8.4-fpm nginx` atau `service ... status` semua aktif.
+![](assets/soal7/7_anarion.png)
+![](assets/soal7/7_elendil.png)
+![](assets/soal7/7_isildur.png)
+
 
 ## Soal 8 — MariaDB (Palantir) + Koneksi dari Worker + Migrasi/Seed
 - Palantir: install MariaDB, buat DB `db_k44` dan user `k44_user`@`%`, izinkan koneksi eksternal (bind-address global), restart.
@@ -79,16 +91,17 @@ No  | Nama                  | NRP
 - Jalankan `php artisan migrate:fresh` dan `php artisan db:seed --class=AiringsTableSeeder`.
 
 ### Validasi
-- Dari worker: `mysql -h 192.233.4.3 -uk44_user -ppasswordk44 -e "SHOW DATABASES;"`.
-- `curl http://elendil.k44.com:8001/api/airing` (juga Isildur/Anarion) harus mengembalikan data.
+![](assets/soal8/8. ELENDIL Migrasi dan Seeding Database.png)
 
 ## Soal 9 — Validasi Aplikasi & API dari Klien
 - Miriel: install `lynx` dan `curl`; set DNS ke Erendis & Amdir.
 - Uji halaman utama tiga worker via `lynx`, dan endpoint API `/api/airing` via `curl`.
 
 ### Validasi
-- `lynx -dump http://elendil.k44.com:8001` (dan dua lainnya) menampilkan halaman.
-- `curl http://isildur.k44.com:8002/api/airing` mengembalikan JSON/daftar airing.
+![](assets/soal9/1.png)
+![](assets/soal9/2.png)
+![](assets/soal9/3.png)
+![](assets/soal9/4.png)
 
 ## Soal 10 — Reverse Proxy Elros (Round Robin)
 - Elros: Nginx reverse proxy ke tiga worker (upstream `kesatria_numenor`), default round-robin.
